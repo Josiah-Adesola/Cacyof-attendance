@@ -4,6 +4,61 @@ import { useNavigate, useLocation } from "react-router-dom";
 function Register() {
   const navigate = useNavigate();
   const numbers = Array.from({ length: 31 }, (_, i) => i + 1);
+  const [errors, setErrors] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
+  const [hostel, setSelectedItem] = useState("");
+  const items = [
+    "Biobaku",
+    "Jaja",
+    "Marire",
+    "Madam Kofo Hall",
+    "Moremi Hall",
+    "Sodehinde Hall",
+    "High rise",
+    "Kofo Hall",
+    "Fagunwa",
+    "MTH",
+    "Makama",
+    "Amina",
+    "Radiography",
+    "Eni-njoku Hall",
+    "Elkanemi",
+    "Off-campus",
+    "Block 1 - Samuel Manuwa",
+    "Block 2 - Samuel Manuwa",
+    "Block 3 - Alli Akilu",
+    "Block 4 - Alli Akilu",
+    "Block 5 - Abimbola Awoliyi",
+    "Block 6 - Felix Dosekun",
+    "Block 7 - Thomas oritsejolomi",
+    "Block 8 - Thomas Oritsejolomi",
+    "OPH Hostel",
+  ];
+
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
+    setformData({ ...formData, hostel: item });
+    setSearchTerm("");
+    console.log(searchTerm);
+    console.log(item);
+  };
+
+  const filteredItems = items.filter((item) =>
+    item.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const displayedItems = filteredItems.slice(0, 3); // Display only the first 3 matching items
+  const handlechange = (e) => {
+    console.log(e.target.value);
+    setSearchTerm(e.target.value);
+    console.log(hostel);
+    const { name, value } = e.target;
+    setformData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   const [formData, setformData] = useState({
     fullname: "",
     email: "",
@@ -12,17 +67,9 @@ function Register() {
     birthMonth: "",
     hostel: "",
   });
-  const [errors, setErrors] = useState({});
-  const handlechange = (e) => {
-    console.log(e.target.value);
-    const { name, value } = e.target;
-    setformData({
-      ...formData,
-      [name]: value,
-    });
-  };
   const handlesubmit = (e) => {
     e.preventDefault();
+    console.log(hostel);
     const validationerrors = {};
     if (!formData.fullname.trim()) {
       validationerrors.name = "full name is required";
@@ -46,27 +93,24 @@ function Register() {
 
     setErrors(validationerrors);
     if (Object.keys(validationerrors).length === 0) {
-      fetch(
-        "https://cacyof-api.fly.dev/api/users?event=664f0f70ca857e5ae20602c1",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json,text/plain, */*",
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      )
+      fetch("https://cacyof-api.fly.dev/api/users", {
+        method: "POST",
+        headers: {
+          Accept: "application/json,text/plain, */*",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
           console.log(data.token);
         });
 
-      alert("Form submitted successfully");
       navigate("/success");
     }
   };
+
   return (
     <div className="flex flex-col justify-start items-center w-screen h-screen box-border ">
       <div className="mt-[15px]">
@@ -108,6 +152,7 @@ function Register() {
               onChange={handlechange}
             />
           </div>
+
           <div className="mt-[15px]">
             <label htmlFor="">D.O.B</label>
             <div className="flex justify-between w-[100%]">
@@ -149,23 +194,29 @@ function Register() {
 
           <div className="mt-[15px]">
             <label htmlFor="">Hostel/Hall of residence</label>
-            <select
-              name="hostel"
-              className="block w-[100%] border leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2"
-              onChange={handlechange}
+            <input
               required
-            >
-              <option value="Jaja">Jaja Hall</option>
-              <option value="Makama">Makama Hall</option>
-              <option value="Shodehinde">Shodehinde Hal1</option>
-              <option value="Mariere">Mariere Hall</option>
-              <option value="Fagunwa">Fagunwa Hall</option>
-              <option value="Biobaku">Biobaku Hall</option>
-              <option value="Option 1">Jaja Hall</option>
-              <option value="Option 2">MTH</option>
-              <option value="Option 3">Eni-Njoku Hall</option>
-              <option value="Option 1">Off-Campus</option>
-            </select>
+              type="text"
+              className="w-[100%] block border leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2"
+              placeholder="Hostel..."
+              name="hostel"
+              value={hostel}
+              onChange={handlechange}
+              onFocus={() => setSelectedItem(null)} // Clear selected item on focus
+            />
+            {searchTerm && (
+              <ul className="list-none p-0 m-0 border border-gray-300 rounded">
+                {displayedItems.map((item, index) => (
+                  <li
+                    key={index}
+                    className="p-1 border-b last:border-b-0 border-gray-300 cursor-pointer hover:bg-gray-200"
+                    onClick={() => handleItemClick(item)}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <div className="text-center leading-[2.5rem]">
             <button
