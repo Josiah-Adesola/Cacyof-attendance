@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 function Success() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col justify-start items-center w-screen h-screen ">
       <div className="mt-[30px]">
@@ -17,8 +17,8 @@ function Success() {
         Attendance Success!
       </div>
       <div className="font-Lato text-center text-[20px] font-[600] leading-[1.5rem] m-[10px]">
-        Beloved Have a wonderful <br />
-        time in Gods presence
+        Beloved, have a wonderful <br />
+        time in God's presence
       </div>
       <div className="text-center">
         <button

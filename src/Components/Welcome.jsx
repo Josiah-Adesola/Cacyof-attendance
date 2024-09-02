@@ -21,7 +21,7 @@ function Welcome() {
       </button>
       <button
         className="bg-[#FF725E] p-[10px] w-[200px] m-[15px] rounded-[8px] text-[#FFFFFF] text-[20px]"
-        onClick={() => navigate("/email")}
+        onClick={() => navigate("/phone")}
       >
         No
       </button>

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-hot-toast";
 function Register() {
   const navigate = useNavigate();
   const numbers = Array.from({ length: 31 }, (_, i) => i + 1);
@@ -93,21 +94,57 @@ function Register() {
 
     setErrors(validationerrors);
     if (Object.keys(validationerrors).length === 0) {
-      fetch("https://cacyof-api.fly.dev/api/users", {
-        method: "POST",
-        headers: {
-          Accept: "application/json,text/plain, */*",
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
+      fetch(
+        "https://cacyof-api.fly.dev/api/users?event=664f0f70ca857e5ae20602c1",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json,text/plain, */*",
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-          console.log(data.token);
+          if (data.data) {
+            // Registration successful
+            toast.success("Registration successful!", {
+              duration: 4000,
+              position: "top-center",
+              style: {
+                background: "#FFA500",
+                color: "#fff",
+              },
+            });
+            // Navigate to the success page
+            navigate("/success");
+          } else if (data.error) {
+            // User already exists
+            toast.error("User already exists!", {
+              duration: 4000,
+              position: "top-center",
+              style: {
+                background: "#FF725E",
+                color: "#fff",
+              },
+            });
+          } else {
+            // General error handling for unexpected responses
+            toast.error(data.message || "Registration failed!", {
+              duration: 4000,
+              position: "top-center",
+              style: {
+                background: "#FF725E",
+                color: "#fff",
+              },
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error during signup:", error);
+          alert("An error occurred. Please try again later.");
         });
-
-      navigate("/success");
     }
   };
 
@@ -150,6 +187,8 @@ function Register() {
               className=" w-[100%] block border leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2"
               name="phoneNo"
               onChange={handlechange}
+              pattern="^\d{11}$"
+              title="Phone number should be exactly 11 digits"
             />
           </div>
 
