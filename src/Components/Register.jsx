@@ -2,12 +2,24 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { useEffect } from "react";
+import { getCookie } from "cookies-next"; // Import the cookies-next library
 function Register() {
   const navigate = useNavigate();
+
   const numbers = Array.from({ length: 31 }, (_, i) => i + 1);
   const [errors, setErrors] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [hostel, setSelectedItem] = useState("");
+  const [eventID, setEventID] = useState(""); // For storing eventID
+  // Fetch the event ID from the cookie
+  useEffect(() => {
+    const storedEventId = getCookie("eventId");
+    if (storedEventId) {
+      setEventID(storedEventId); // Set eventId from the cookie
+    }
+  }, []);
+
   const items = [
     "Biobaku",
     "Jaja",
@@ -94,17 +106,14 @@ function Register() {
 
     setErrors(validationerrors);
     if (Object.keys(validationerrors).length === 0) {
-      fetch(
-        "https://cacyof-api.fly.dev/api/users?event=664f0f70ca857e5ae20602c1",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json,text/plain, */*",
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      )
+      fetch(`https://cacyof-api.fly.dev/api/users?event=${eventID}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json,text/plain, */*",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
         .then((res) => res.json())
         .then((data) => {
           if (data.data) {
@@ -147,6 +156,14 @@ function Register() {
         });
     }
   };
+
+  useEffect(() => {
+    // Fetch the eventID from local storage or another source
+    const storedEventID = localStorage.getItem("eventID");
+    if (storedEventID) {
+      setEventID(storedEventID); // Set the eventID state
+    }
+  }, []);
 
   return (
     <div className="flex flex-col justify-start items-center w-screen h-screen box-border ">

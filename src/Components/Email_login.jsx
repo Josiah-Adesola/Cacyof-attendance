@@ -1,18 +1,41 @@
-import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { useState } from "react";
+
 function Email_login() {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+
+  // Helper function to read cookies
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const formData = { email };
 
+    // Get eventId from the cookie
+    const eventId = getCookie("eventId");
+
+    // Check if eventId exists before proceeding
+    if (!eventId) {
+      toast.error("Event ID not found. Please try again later.", {
+        duration: 4000,
+        position: "top-center",
+        style: {
+          background: "#FF725E",
+          color: "#fff",
+        },
+      });
+      return;
+    }
+
     fetch(
-      "https://cacyof-api.fly.dev/api/users/confirmAttendance?event=6618ae1a676a07f96c5e0f92",
+      `https://cacyof-api.fly.dev/api/users/confirmAttendance?event=${eventId}`,
       {
         method: "POST",
         headers: {
@@ -33,7 +56,7 @@ function Email_login() {
               color: "#fff",
             },
           });
-          // Navigate to the success page or perform any other action
+          // Navigate to the success page
           navigate("/success");
         } else if (data.error === "not found") {
           toast.error("Email not found. Please check your email address.", {
@@ -53,7 +76,7 @@ function Email_login() {
               color: "#fff",
             },
           });
-          // Navigate to the success page or perform any other action
+          // Navigate to the success page
           navigate("/success");
         } else {
           toast.error(data.message || "Attendance confirmation failed!", {
@@ -95,14 +118,14 @@ function Email_login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="e.g. sample@yahoo.com"
-              className="block  border leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2 w-full"
+              className="block border leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2 w-full"
             />
           </div>
 
           <div className="text-center">
             <button
               type="submit"
-              className="bg-[#FF725E] text-[white] mt-[15px] justify-center px-[30px] rounded-[10px] "
+              className="bg-[#FF725E] text-[white] mt-[15px] justify-center px-[30px] rounded-[10px]"
             >
               CONFIRM ATTENDANCE
             </button>

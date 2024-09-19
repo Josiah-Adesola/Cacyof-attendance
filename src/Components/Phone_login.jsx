@@ -1,10 +1,21 @@
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getCookie } from "cookies-next"; // Import the cookies-next library
+
 function Phone_login() {
   const navigate = useNavigate();
   const [phoneNo, setPhoneNumber] = useState("");
+  const [eventId, setEventId] = useState("");
+
+  // Fetch the event ID from the cookie
+  useEffect(() => {
+    const storedEventId = getCookie("eventId");
+    if (storedEventId) {
+      setEventId(storedEventId); // Set eventId from the cookie
+    }
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -12,7 +23,7 @@ function Phone_login() {
     const formData = { phoneNo };
 
     fetch(
-      "https://cacyof-api.fly.dev/api/users/confirmAttendance?event=6618ae1a676a07f96c5e0f92",
+      `https://cacyof-api.fly.dev/api/users/confirmAttendance?event=${eventId}`, // Use the dynamic eventId
       {
         method: "POST",
         headers: {
@@ -95,7 +106,7 @@ function Phone_login() {
               id="phoneNumber"
               value={phoneNo}
               onChange={(e) => setPhoneNumber(e.target.value)}
-              className="block  border leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2 w-full"
+              className="block border leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2 w-full"
             />
           </div>
 
