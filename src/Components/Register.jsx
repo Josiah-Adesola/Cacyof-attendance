@@ -315,7 +315,7 @@ function Register() {
         <img src="./Business.svg" alt="" />
       </div>
 
-      <div className="flex font-Lato justify-center text-left text-[20px] font-[600] leading-[2.2rem] mb-7">
+      <div className="flex font-Lato justify-center text-left text-[17px] md:text-[20px] font-[600] leading-[2rem] md:leading-[2.2rem] mb-7">
         <form action="" onSubmit={handlesubmit}>
           <div className="">
             <label htmlFor="">Full Name</label>
@@ -323,23 +323,23 @@ function Register() {
               required
               type="text"
               placeholder="Enter Your Name"
-              className="w-[100%] block border leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2"
+              className="w-[100%] block border leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-2 md:px-4 py-2"
               name="fullname"
               onChange={handlechange}
             />
           </div>
-          <div className="mt-[15px]">
+          <div className=" mt-[10px] md:mt-[15px]">
             <label htmlFor="">Email address</label>
             <input
               required
               type="text"
               placeholder="e.g. sample@yahoo.com"
               name="email"
-              className="w-[100%] block border leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2"
+              className="w-[100%] block border leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-2 md:px-4 py-2"
               onChange={handlechange}
             />
           </div>
-          <div className="mt-[15px]">
+          <div className="mt-[10px] md:mt-[15px]">
             <label htmlFor="">Phone Number</label>
             <input
               required
@@ -353,7 +353,7 @@ function Register() {
             />
           </div>
 
-          <div className="mt-[15px]">
+          <div className="mt-[10px] md:mt-[15px]">
             <label htmlFor="">D.O.B</label>
             <div className="flex justify-between w-[100%]">
               <select
@@ -396,7 +396,7 @@ function Register() {
             </div>
           </div>
 
-          <div className="mt-[15px]">
+          <div className="mt-[10px] md:mt-[15px]">
             <label htmlFor="">Department</label>
             <input
               required
@@ -423,7 +423,7 @@ function Register() {
             )}
           </div>
 
-          <div className="mt-[15px]">
+          <div className="mt-[10px] md:mt-[15px]">
             <div className="flex justify-between w-[100%]">
               <select
                 name="campus"
@@ -452,7 +452,7 @@ function Register() {
             </div>
           </div>
 
-          <div className="mt-[15px]">
+          <div className="mt-[10px] md:mt-[15px]">
             <label htmlFor="">Hostel/Hall of residence</label>
             <input
               required
@@ -479,7 +479,7 @@ function Register() {
             )}
           </div>
 
-          <div className="mt-[15px]">
+          <div className="mt-[10px] md:mt-[15px]">
             <div className="flex justify-between w-[100%]">
               <select
                 name="level"

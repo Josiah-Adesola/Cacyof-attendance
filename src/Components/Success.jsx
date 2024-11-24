@@ -38,14 +38,6 @@ function Success() {
           UPDATE PROFILE DETAILS
         </button>
       </div>
-
-      {/* Bottom Circles */}
-      <div className="absolute bottom-0 right-0">
-        <div className="w-[150px] h-[150px] rounded-full bg-[#FF725E] opacity-50"></div>
-      </div>
-      <div className="absolute bottom-0 right-[50px]">
-        <div className="w-[100px] h-[100px] rounded-full bg-[#FF725E] opacity-50"></div>
-      </div>
     </div>
   );
 }

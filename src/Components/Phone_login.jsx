@@ -109,7 +109,7 @@ function Phone_login() {
         <img src="./Business2.svg" alt="" />
       </div>
 
-      <div className="font-Lato text-left text-[20px] font-[600] leading-[2.5rem] m-[20px] w-[80%] md:w-[70%]">
+      <div className="font-Lato text-left text-[17px] md:text-[20px] font-[600] leading-[2.5rem] m-[20px] w-[80%] md:w-[70%]">
         <form action="" onSubmit={handleSubmit} className="w-full">
           <div className="mt-[15px]">
             <label htmlFor="">Phone number</label>
