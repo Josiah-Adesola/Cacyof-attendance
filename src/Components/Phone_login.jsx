@@ -20,6 +20,19 @@ function Phone_login() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    // Check if eventId exists before proceeding
+    if (!eventId) {
+      toast.error("Event ID not found. Please try again later.", {
+        duration: 4000,
+        position: "top-center",
+        style: {
+          background: "#FF725E",
+          color: "#fff",
+        },
+      });
+      return;
+    }
+
     const formData = { phoneNo };
 
     fetch(
@@ -96,7 +109,7 @@ function Phone_login() {
         <img src="./Business2.svg" alt="" />
       </div>
 
-      <div className="font-Lato text-left text-[20px] font-[600] leading-[2.5rem] m-[20px] w-[70%]">
+      <div className="font-Lato text-left text-[20px] font-[600] leading-[2.5rem] m-[20px] w-[80%] md:w-[70%]">
         <form action="" onSubmit={handleSubmit} className="w-full">
           <div className="mt-[15px]">
             <label htmlFor="">Phone number</label>
@@ -113,7 +126,7 @@ function Phone_login() {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-[#FF725E] text-[white] mt-[15px] justify-center px-[30px] rounded-[10px] "
+              className="bg-[#FF725E] text-[white] mt-[15px] justify-center px-[15px] md:px-[30px] rounded-[10px] "
             >
               CONFIRM ATTENDANCE
             </button>
@@ -128,6 +141,14 @@ function Phone_login() {
             </div>
           </div>
         </form>
+      </div>
+
+      {/* Bottom Circles */}
+      <div className="absolute bottom-0 right-0">
+        <div className="w-[150px] h-[150px] rounded-full bg-[#FF725E] opacity-50"></div>
+      </div>
+      <div className="absolute bottom-0 right-[50px]">
+        <div className="w-[100px] h-[100px] rounded-full bg-[#FF725E] opacity-50"></div>
       </div>
     </div>
   );

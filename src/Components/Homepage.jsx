@@ -23,28 +23,39 @@ function Homepage() {
   }, [location]);
 
   return (
-    <div className="relative w-screen h-screen place-content-center bg-[#FF725E]">
-      <div class="absolute inset-y-0 right-0 w-2/4 h-screen bg-[#FF25]"></div>
+    <div className="relative w-screen h-screen bg-[#ff715e2e] font-sans flex justify-center items-center">
+      {/* Left Background - Orange */}
+      <div className="absolute inset-y-0 left-0 w-1/2 h-full bg-[#ff725e]"></div>
 
-      <div className="p-[50px]">
-        <div className="flex justify-center m-[10px] z-40">
-          <img src="./LOGO1.svg" alt="" />
-          <img src="./LOGO2.svg" alt="" />
-          <img src="./LOGO3.svg" alt="" />
+      {/* Right Background - Blue (Updated color code) */}
+      <div className="absolute inset-y-0 right-0 w-1/2 h-full bg-[#ff715e83]"></div>
+
+      {/* Content in the center */}
+      <div className="relative z-10 p-[50px] text-center">
+        {/* Logo Images */}
+        <div className="flex justify-center space-x-[20px] mb-[10px] text-shadow-lg">
+          <img src="./LOGO1.svg" alt="Logo 1" />
+          <img src="./LOGO2.svg" alt="Logo 2" />
+          <img src="./LOGO3.svg" alt="Logo 3" />
         </div>
-        <div className="flex font-Lato justify-center text-center text-[30px] font-[800] text-[#FFFFFF] leading-[28.8px] mt-[25px] ">
+
+        {/* Welcome Text */}
+        <div className="font-Lato text-[30px] font-[800] text-[#FFFFFF] leading-[28.8px] mt-[25px] text-shadow-lg">
           WELCOME TO <br /> CACYOF UNILAG/MEDILAG
         </div>
 
-        <div className="flex font-Lato justify-center text-center text-[25px] font-[700] leading-[28.8px] mt-[20px] z-auto ">
+        {/* Subheading */}
+        <div className="font-Lato text-[25px] font-[700] text-[000000] leading-[28.8px] mt-[20px] text-shadow-md">
           A home of love and fulfillment!
         </div>
-        <div className="flex font-Lato justify-center text-center text-[15px] font-[700] leading-[28.8px] mt-[70px]">
+
+        {/* Button */}
+        <div className="mt-[70px]">
           <button
-            className="text-[#FFFFFF] bg-[black] p-[10px] px-[25px] rounded-[10px] z-10"
+            className="text-[#FFFFFF] bg-black p-[10px] px-[25px] rounded-[10px] text-shadow-lg cursor-pointer transition duration-300 ease-in-out shadow-lg animate-bounce"
             onClick={() => navigate("/welcome")}
           >
-            NEXT{" "}
+            NEXT {">>>"}
           </button>
         </div>
       </div>

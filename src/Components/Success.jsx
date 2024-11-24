@@ -26,8 +26,25 @@ function Success() {
           className="bg-[#FF725E] text-[white] mt-[15px] justify-center p-[15px]  rounded-[10px] "
           onClick={() => navigate("/welcome")}
         >
-          CONFIRM FOR ANOTHER
+          SIGN FOR ANOTHER
         </button>
+      </div>
+      <div className="text-center">
+        <button
+          type="submit"
+          className="bg-[#FF725E] text-[white] mt-[15px] justify-center p-[15px]  rounded-[10px] "
+          onClick={() => navigate("/")}
+        >
+          UPDATE PROFILE DETAILS
+        </button>
+      </div>
+
+      {/* Bottom Circles */}
+      <div className="absolute bottom-0 right-0">
+        <div className="w-[150px] h-[150px] rounded-full bg-[#FF725E] opacity-50"></div>
+      </div>
+      <div className="absolute bottom-0 right-[50px]">
+        <div className="w-[100px] h-[100px] rounded-full bg-[#FF725E] opacity-50"></div>
       </div>
     </div>
   );
