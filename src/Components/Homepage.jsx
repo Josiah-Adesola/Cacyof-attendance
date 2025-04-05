@@ -53,8 +53,7 @@ function Homepage() {
         <div className="mt-[70px]">
           <button
             className="text-[#FFFFFF] bg-black p-[10px] px-[25px] rounded-[10px] text-shadow-lg cursor-pointer transition duration-300 ease-in-out shadow-lg animate-bounce"
-            onClick={() => navigate("/welcome")}
-          >
+            onClick={() => navigate("/welcome")}>
             NEXT {">>>"}
           </button>
         </div>

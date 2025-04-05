@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 function Email_login() {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // Helper function to read cookies
@@ -33,7 +34,7 @@ function Email_login() {
       });
       return;
     }
-
+    setLoading(true);
     fetch(
       `https://cacyof-api.fly.dev/api/users/confirmAttendance?event=${eventId}`,
       {
@@ -47,6 +48,7 @@ function Email_login() {
     )
       .then((res) => res.json())
       .then((data) => {
+        setLoading(false); // Stop loading
         if (data.data) {
           toast.success("Attendance confirmed successfully!", {
             duration: 4000,
@@ -90,6 +92,7 @@ function Email_login() {
         }
       })
       .catch((error) => {
+        setLoading(false); // Stop loading even on error
         console.error("Error during attendance confirmation:", error);
         toast.error("An error occurred. Please try again later.", {
           duration: 4000,
@@ -125,16 +128,16 @@ function Email_login() {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-[#FF725E] text-[white] mt-[15px] justify-center px-[15px] md:px-[30px] rounded-[10px]"
-            >
-              CONFIRM ATTENDANCE
+              disabled={loading}
+              className={`bg-[#FF725E] text-[white] mt-[15px] justify-center px-[15px] md:px-[30px] rounded-[10px]
+               ${loading ? "opacity-50 cursor-not-allowed" : ""}`}>
+              {loading ? "Submitting..." : " CONFIRM ATTENDANCE"}
             </button>
             <div className="mt-[20px]">
               Use phone number?{" "}
               <span
                 className="text-[#FF725E]"
-                onClick={() => navigate("/phone")}
-              >
+                onClick={() => navigate("/phone")}>
                 Confirm
               </span>
             </div>

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { getCookie } from "cookies-next"; // Import the cookies-next library
 function Register() {
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const numbers = Array.from({ length: 31 }, (_, i) => i + 1);
   const [errors, setErrors] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
@@ -223,7 +223,7 @@ function Register() {
   });
   const handlesubmit = (e) => {
     e.preventDefault();
-    console.log(hostel);
+    // console.log(hostel);
     const validationerrors = {};
     if (!formData.fullname.trim()) {
       validationerrors.name = "full name is required";
@@ -250,6 +250,7 @@ function Register() {
 
     setErrors(validationerrors);
     if (Object.keys(validationerrors).length === 0) {
+      setLoading(true); // Start loading
       fetch(`https://cacyof-api.fly.dev/api/users?event=${eventID}`, {
         method: "POST",
         headers: {
@@ -260,6 +261,7 @@ function Register() {
       })
         .then((res) => res.json())
         .then((data) => {
+          setLoading(false); // Stop loading
           if (data.data) {
             // Registration successful
             toast.success("Registration successful!", {
@@ -295,6 +297,7 @@ function Register() {
           }
         })
         .catch((error) => {
+          setLoading(false); // Stop loading even on error
           console.error("Error during signup:", error);
           alert("An error occurred. Please try again later.");
         });
@@ -360,8 +363,7 @@ function Register() {
                 name="birthMonth"
                 className="border inline-block w-[48%] leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2 "
                 onChange={handlechange}
-                required
-              >
+                required>
                 <option value="" disabled selected>
                   Month
                 </option>
@@ -382,8 +384,7 @@ function Register() {
                 name="birthDay"
                 className="border inline-block w-[48%] leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2"
                 onChange={handlechange}
-                required
-              >
+                required>
                 <option value="" disabled selected>
                   Day
                 </option>
@@ -414,8 +415,7 @@ function Register() {
                   <li
                     key={index}
                     className="p-1 border-b last:border-b-0 border-gray-300 cursor-pointer hover:bg-gray-200"
-                    onClick={() => handleItemDeptClick(item)}
-                  >
+                    onClick={() => handleItemDeptClick(item)}>
                     {item}
                   </li>
                 ))}
@@ -429,8 +429,7 @@ function Register() {
                 name="campus"
                 className="border inline-block w-[48%] leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2 "
                 onChange={handlechange}
-                required
-              >
+                required>
                 <option value="" disabled selected>
                   Campus
                 </option>
@@ -441,8 +440,7 @@ function Register() {
                 name="gender"
                 className="border inline-block w-[48%] leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2"
                 onChange={handlechange}
-                required
-              >
+                required>
                 <option value="" disabled selected>
                   Gender
                 </option>
@@ -470,8 +468,7 @@ function Register() {
                   <li
                     key={index}
                     className="p-1 border-b last:border-b-0 border-gray-300 cursor-pointer hover:bg-gray-200"
-                    onClick={() => handleItemClick(item)}
-                  >
+                    onClick={() => handleItemClick(item)}>
                     {item}
                   </li>
                 ))}
@@ -485,8 +482,7 @@ function Register() {
                 name="level"
                 className="border inline-block w-[48%] leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2 "
                 onChange={handlechange}
-                required
-              >
+                required>
                 <option value="" disabled selected>
                   Level
                 </option>
@@ -502,8 +498,7 @@ function Register() {
                 name="Finalist"
                 className="border inline-block w-[48%] leading-[1px] border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 rounded-md px-4 py-2 "
                 onChange={handleFinalistChange}
-                required
-              >
+                required>
                 <option value="" disabled selected>
                   Finalist?
                 </option>
@@ -516,9 +511,10 @@ function Register() {
           <div className="text-center leading-[2.5rem]">
             <button
               type="submit"
-              className="bg-[#FF725E] text-[white] mt-[12px] justify-center px-[30px] rounded-[10px] "
-            >
-              Submit
+              disabled={loading}
+              className={`bg-[#FF725E] text-[white] mt-[12px] justify-center px-[30px] rounded-[10px]
+            ${loading ? "opacity-50 cursor-not-allowed" : ""}`}>
+              {loading ? "Submitting..." : "Register"}
             </button>
           </div>
         </form>

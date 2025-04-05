@@ -8,6 +8,7 @@ function Phone_login() {
   const navigate = useNavigate();
   const [phoneNo, setPhoneNumber] = useState("");
   const [eventId, setEventId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Fetch the event ID from the cookie
   useEffect(() => {
@@ -34,7 +35,7 @@ function Phone_login() {
     }
 
     const formData = { phoneNo };
-
+    setLoading(true);
     fetch(
       `https://cacyof-api.fly.dev/api/users/confirmAttendance?event=${eventId}`, // Use the dynamic eventId
       {
@@ -48,6 +49,7 @@ function Phone_login() {
     )
       .then((res) => res.json())
       .then((data) => {
+        setLoading(false); // Stop loading
         if (data.data) {
           toast.success("Attendance confirmed successfully!", {
             duration: 4000,
@@ -92,6 +94,7 @@ function Phone_login() {
       })
       .catch((error) => {
         console.error("Error during attendance confirmation:", error);
+        setLoading(false);
         toast.error("An error occurred. Please try again later.", {
           duration: 4000,
           position: "top-center",
@@ -126,16 +129,16 @@ function Phone_login() {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-[#FF725E] text-[white] mt-[15px] justify-center px-[15px] md:px-[30px] rounded-[10px] "
-            >
-              CONFIRM ATTENDANCE
+              disabled={loading}
+              className={`bg-[#FF725E] text-[white] mt-[15px] justify-center px-[15px] md:px-[30px] rounded-[10px]
+               ${loading ? "opacity-50 cursor-not-allowed" : ""}`}>
+              {loading ? "Submitting..." : " CONFIRM ATTENDANCE"}
             </button>
             <div className="mt-[20px]">
               Use Email Address?{" "}
               <span
                 className="text-[#FF725E]"
-                onClick={() => navigate("/email")}
-              >
+                onClick={() => navigate("/email")}>
                 Confirm
               </span>
             </div>
